@@ -87,6 +87,8 @@ body {
     border: none;
     border-radius: 15px;
     overflow: hidden;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .card-header {
