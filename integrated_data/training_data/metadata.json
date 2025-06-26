@@ -1,0 +1,32 @@
+{
+  "total_samples": 160,
+  "features": [
+    "Timestamp",
+    "Name",
+    " Age",
+    " Weight(in Kg)",
+    "Height (in feet)",
+    "Goal in Fitness ",
+    "Food Style ",
+    "Any Health Issues ",
+    "Photo",
+    " Contact Number ",
+    "Workout Plans",
+    "Diet Plan",
+    "Weight_KG",
+    "Height_Feet",
+    "Fitness_Goal",
+    "Food_Preference",
+    "Health_Issues",
+    "Contact_Number",
+    "Workout_Plans",
+    "Diet_Plan",
+    "Age",
+    "Height_Inches",
+    "BMI",
+    "BMI_Category",
+    "Body_Type",
+    "Created_Date"
+  ],
+  "export_date": "2025-06-27T00:02:40.342085"
+}

@@ -1,0 +1,13 @@
+============================================================
+DATASET INTEGRATION REPORT
+============================================================
+
+1. DATASET OVERVIEW
+--------------------
+Source file: dd.xlsx
+Total records: 160
+Total columns: 12
+
+2. COLUMN ANALYSIS
+--------------------
+Found columns:

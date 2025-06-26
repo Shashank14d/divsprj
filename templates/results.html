@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Personalized Fitness Plan - Smart AI Planner</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="{{ url_for('index') }}">
+                <i class="fas fa-dumbbell me-2"></i>
+                Smart Fitness Planner
+            </a>
+            <a href="{{ url_for('index') }}" class="btn btn-outline-light">
+                <i class="fas fa-plus me-2"></i>
+                New Plan
+            </a>
+        </div>
+    </nav>
+
+    <!-- Results Header -->
+    <div class="bg-primary text-white py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8">
+                    <h1 class="display-5 fw-bold mb-3">
+                        <i class="fas fa-user-check me-3"></i>
+                        Hello, {{ results.name }}!
+                    </h1>
+                    <p class="lead mb-0">Your personalized AI-powered fitness plan is ready. Let's achieve your goals together!</p>
+                </div>
+                <div class="col-lg-4 text-center">
+                    <div class="profile-image-container">
+                        <img src="{{ url_for('static', filename=results.image_path) }}" alt="Profile" class="profile-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Analysis Results -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <!-- Personal Info Card -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="mb-0">
+                                <i class="fas fa-user me-2"></i>
+                                Personal Information
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="info-item">
+                                <strong>Age:</strong> {{ results.age }} years
+                            </div>
+                            <div class="info-item">
+                                <strong>Gender:</strong> {{ results.gender }}
+                            </div>
+                            <div class="info-item">
+                                <strong>Height:</strong> {{ results.height_feet }}' {{ results.height_inches }}"
+                            </div>
+                            <div class="info-item">
+                                <strong>Weight:</strong> {{ results.weight_kg }} kg
+                            </div>
+                            <div class="info-item">
+                                <strong>Food Preference:</strong> {{ results.food_preference }}
+                            </div>
+                            <div class="info-item">
+                                <strong>Fitness Goal:</strong> {{ results.fitness_goal }}
+                            </div>
+                            {% if results.health_issues %}
+                            <div class="info-item">
+                                <strong>Health Issues:</strong> {{ results.health_issues }}
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- BMI Analysis -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">
+                                <i class="fas fa-calculator me-2"></i>
+                                BMI Analysis
+                            </h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="bmi-display">
+                                <h2 class="display-4 fw-bold text-primary">{{ results.bmi }}</h2>
+                                <p class="lead">Your BMI</p>
+                            </div>
+                            <div class="bmi-category">
+                                <span class="badge bg-{{ 'success' if results.bmi_category == 'Normal' else 'warning' if results.bmi_category == 'Overweight' else 'danger' if results.bmi_category == 'Obese' else 'info' }} fs-6">
+                                    {{ results.bmi_category }}
+                                </span>
+                            </div>
+                            <div class="bmi-info mt-3">
+                                <small class="text-muted">
+                                    {% if results.bmi_category == 'Underweight' %}
+                                        Consider increasing caloric intake and strength training.
+                                    {% elif results.bmi_category == 'Normal' %}
+                                        Great! Maintain your healthy lifestyle.
+                                    {% elif results.bmi_category == 'Overweight' %}
+                                        Focus on balanced diet and regular exercise.
+                                    {% else %}
+                                        Consult a healthcare provider for guidance.
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Body Type Analysis -->
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header bg-warning text-dark">
+                            <h5 class="mb-0">
+                                <i class="fas fa-camera me-2"></i>
+                                AI Body Type Analysis
+                            </h5>
+                        </div>
+                        <div class="card-body text-center">
+                            <div class="body-type-display">
+                                <i class="fas fa-user-circle fa-4x text-warning mb-3"></i>
+                                <h4 class="fw-bold">{{ results.body_type }}</h4>
+                            </div>
+                            <div class="body-type-info mt-3">
+                                <small class="text-muted">
+                                    {% if results.body_type == 'Ectomorph' %}
+                                        Naturally thin with difficulty gaining weight. Focus on strength training and higher caloric intake.
+                                    {% elif results.body_type == 'Mesomorph' %}
+                                        Athletic build with natural muscle development. Responds well to both strength and cardio training.
+                                    {% else %}
+                                        Naturally heavier with tendency to gain weight. Focus on cardio and controlled diet.
+                                    {% endif %}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Diet Plan -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-success text-white">
+                            <h3 class="mb-0">
+                                <i class="fas fa-utensils me-2"></i>
+                                Your Personalized Diet Plan
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for meal, food in results.diet_plan.items() %}
+                                <div class="col-lg-6 col-md-12 mb-4">
+                                    <div class="meal-card">
+                                        <div class="meal-header">
+                                            <h5 class="text-success">
+                                                <i class="fas fa-clock me-2"></i>
+                                                {{ meal }}
+                                            </h5>
+                                        </div>
+                                        <div class="meal-content">
+                                            <p class="mb-0">{{ food }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workout Plan -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-primary text-white">
+                            <h3 class="mb-0">
+                                <i class="fas fa-dumbbell me-2"></i>
+                                Your Personalized Workout Plan
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                {% for day, workout in results.workout_plan.items() %}
+                                <div class="col-lg-6 col-md-12 mb-4">
+                                    <div class="workout-card">
+                                        <div class="workout-header">
+                                            <h5 class="text-primary">
+                                                <i class="fas fa-calendar-day me-2"></i>
+                                                {{ day }}
+                                            </h5>
+                                        </div>
+                                        <div class="workout-content">
+                                            <p class="mb-0">{{ workout }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recommendations -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow">
+                        <div class="card-header bg-info text-white">
+                            <h3 class="mb-0">
+                                <i class="fas fa-lightbulb me-2"></i>
+                                AI Recommendations
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="recommendation-item">
+                                        <h6 class="text-info">
+                                            <i class="fas fa-heart me-2"></i>
+                                            Health Tips
+                                        </h6>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>Stay hydrated with 8-10 glasses of water daily</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Get 7-9 hours of quality sleep</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Track your progress weekly</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Listen to your body and rest when needed</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="recommendation-item">
+                                        <h6 class="text-info">
+                                            <i class="fas fa-chart-line me-2"></i>
+                                            Progress Tracking
+                                        </h6>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fas fa-check text-success me-2"></i>Take weekly progress photos</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Measure your weight and body measurements</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Keep a food and exercise journal</li>
+                                            <li><i class="fas fa-check text-success me-2"></i>Set realistic short-term goals</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 text-center">
+                    <div class="action-buttons">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg me-3">
+                            <i class="fas fa-plus me-2"></i>
+                            Create New Plan
+                        </a>
+                        <button class="btn btn-success btn-lg me-3" onclick="window.print()">
+                            <i class="fas fa-print me-2"></i>
+                            Print Plan
+                        </button>
+                        <button class="btn btn-info btn-lg" onclick="downloadPlan()">
+                            <i class="fas fa-download me-2"></i>
+                            Download PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container text-center">
+            <p>&copy; 2024 Smart AI-Based Diet and Workout Planner. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        function downloadPlan() {
+            // This would integrate with a PDF generation library
+            alert('PDF download feature would be implemented here!');
+        }
+    </script>
+</body>
+</html> 
