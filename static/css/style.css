@@ -1,6 +1,6 @@
 /* Global Styles */
 :root {
-    --primary-color: #007bff;
+    --primary-color: #101010;
     --secondary-color: #6c757d;
     --success-color: #28a745;
     --warning-color: #ffc107;
@@ -17,7 +17,7 @@ body {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #01030f 0%, #06010a 100%);
     min-height: 100vh;
     position: relative;
     overflow: hidden;
@@ -94,10 +94,12 @@ body {
 .card-header {
     border-bottom: none;
     padding: 1.5rem;
+    background-color: #28a745;
 }
 
 .card-body {
     padding: 2rem;
+      background-color: rgb(255, 255, 255, 0.3);
 }
 
 /* Form Elements */
@@ -115,7 +117,7 @@ body {
 
 .form-label {
     font-weight: 600;
-    color: var(--dark-color);
+    color:black;
     margin-bottom: 0.5rem;
 }
 
@@ -420,3 +422,6 @@ body {
 ::-webkit-scrollbar-thumb:hover {
     background: #0056b3;
 } 
+
+
+
